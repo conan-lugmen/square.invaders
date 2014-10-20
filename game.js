@@ -1,5 +1,3 @@
-var si = {}; // global object for common settings and stuff
-
 ;(function() {
 	var Game = function (canvasId) {
 		this.init(canvasId);
@@ -18,6 +16,7 @@ var si = {}; // global object for common settings and stuff
 		init: function (canvasId) {
 			si.canvas = document.getElementById(canvasId);
 			si.pg = si.canvas.getContext("2d");
+
 			si.players = [new Player()];
 			si.bullets = [];
 			si.invaders = [];
@@ -40,6 +39,14 @@ var si = {}; // global object for common settings and stuff
 			si.bodies.forEach(function(body) {
 				body.draw();
 			});
+		},
+
+		addBullet: function (bullet) {
+			si.bullets.push(bullet);
+		},
+
+		removeBullet: function(bullet) {
+			si.bullets.splice(si.bullets.indexOf(bullet));
 		}
 	};
 
@@ -66,7 +73,7 @@ var si = {}; // global object for common settings and stuff
 			}
 
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
-				si.bullets.push(new Bullet({
+				si.game.addBullet(new Bullet({
 					x: this.center.x,
 					y: this.center.y - this.size.y / 2
 				}, 'yellow', {x: 0, y: -6}));
@@ -99,6 +106,11 @@ var si = {}; // global object for common settings and stuff
 		update: function () {
 			this.center.x += this.velocity.x;
 			this.center.y += this.velocity.y;
+
+			// remove bullets that leave the playground
+			if(this.isOutOfBounds()) {
+				si.game.removeBullet(this);
+			}
 		},
 
 		draw: function () {
@@ -109,6 +121,18 @@ var si = {}; // global object for common settings and stuff
 				this.size.x,
 				this.size.y
 			);
+		},
+
+		isOutOfBounds: function () {
+			if(this.center.x < 0 ||
+				this.center.x > si.canvas.width ||
+				this.center.y < 0 ||
+				this.center.y > si.canvas.height) {
+
+				return true;
+			}
+
+			return false;
 		}
 	};
 
@@ -154,6 +178,8 @@ var si = {}; // global object for common settings and stuff
 	};
 
 	window.onload = function () {
-		new Game("playground");
+		si = {}; // global object for common settings and stuff
+
+		si.game = new Game("playground");
 	};
 }());
