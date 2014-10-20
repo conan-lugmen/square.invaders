@@ -41,8 +41,8 @@ var si = {}; // global object for common settings and stuff
 			y: 15
 		};
 		this.center = {
-			x: si.pg.width / 2,
-			y: si.pg.height - this.size.y
+			x: si.canvas.width / 2,
+			y: si.canvas.height - this.size.y
 		};
 	};
 
