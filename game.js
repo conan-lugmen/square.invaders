@@ -104,8 +104,8 @@
 		draw: function () {
 			si.pg.fillStyle = this.color;
 			si.pg.fillRect(
-				this.center.x,
-				this.center.y,
+				this.center.x - this.size.x / 2,
+				this.center.y - this.size.y / 2,
 				this.size.x,
 				this.size.y
 			);
@@ -137,8 +137,8 @@
 		draw: function () {
 			si.pg.fillStyle = this.color;
 			si.pg.fillRect(
-				this.center.x,
-				this.center.y,
+				this.center.x - this.size.x / 2,
+				this.center.y - this.size.y / 2,
 				this.size.x,
 				this.size.y
 			);
@@ -181,10 +181,14 @@
 
 		draw: function () {
 			si.pg.fillStyle = this.color;
-			si.pg.fillRect(this.center.x, this.center.y, this.size.x, this.size.y);
+			si.pg.fillRect(
+				this.center.x - this.size.x / 2,
+				this.center.y - this.size.y / 2,
+				this.size.x,
+				this.size.y
+			);
 		}
 	};
-
 
 
 	var Keyboard = function () {
