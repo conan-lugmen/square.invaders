@@ -1,12 +1,8 @@
-var si = {}; // global object for common settings
+var si = {}; // global object for common settings and stuff
 
 ;(function() {
 	var Game = function (canvasId) {
-		si.canvas = document.getElementById(canvasId);
-		si.pg = si.canvas.getContext("2d");
-		si.players = [new Player()];
-		si.bullets = [];
-		si.invaders = [];
+		this.init(canvasId);
 
 		// helper array to process all draw functions at once
 		this.bodies = si.players.concat(si.bullets, si.invaders);
@@ -21,6 +17,15 @@ var si = {}; // global object for common settings
 	};
 
 	Game.prototype = {
+		init: function (canvasId) {
+			si.canvas = document.getElementById(canvasId);
+			si.pg = si.canvas.getContext("2d");
+			si.players = [new Player()];
+			si.bullets = [];
+			si.invaders = [];
+
+		},
+
 		update: function () {
 		},
 
