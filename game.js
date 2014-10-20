@@ -20,7 +20,7 @@
 			si.players = [new Player()];
 			si.bullets = [];
 			si.invaders = [];
-
+			this.createInvaders();
 		},
 
 		update: function () {
@@ -47,6 +47,18 @@
 
 		removeBullet: function(bullet) {
 			si.bullets.splice(si.bullets.indexOf(bullet));
+		},
+
+		createInvaders: function () {
+			var start = 30;
+			var spacing = 30;
+
+			for(var i = 0; i < 24; i++) {
+				var x = start + (i % 8) * spacing;
+				var y = start + (i % 3) * spacing;
+
+				si.invaders.push(new Invader({x: x, y: y}));
+			}
 		}
 	};
 
@@ -141,22 +153,33 @@
 	};
 
 
-	var Invader = function (center) {
-		this.color = color;
+	var Invader = function (center, color) {
+		this.color = color || 'green';
 		this.size = {
 			x: 10,
 			y: 10
 		};
 		this.center = center;
+		this.patrolX = 0;
+		this.speedX = 0.3;
 	};
 
 	Invader.prototype = {
 		update: function () {
+			if(this.patrolX < 0 || this.patrolX > 40) {
+				this.speedX = - this.speedX;
+			}
+
+			this.center.x += this.speedX;
+			this.patrolX += this.speedX;
 		},
 
 		draw: function () {
+			si.pg.fillStyle = this.color;
+			si.pg.fillRect(this.center.x, this.center.y, this.size.x, this.size.y);
 		}
 	};
+
 
 
 	var Keyboard = function () {
