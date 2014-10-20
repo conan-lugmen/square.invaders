@@ -66,10 +66,14 @@
 	Player.prototype = {
 		update: function () {
 			if(this.keyboard.isDown(this.keyboard.keys.right)) {
-				this.center.x += 2;
+				if(this.center.x + this.size.x + 2 <= si.canvas.width) {
+					this.center.x += 2;
+				}
 
 			} else if(this.keyboard.isDown(this.keyboard.keys.left)) {
-				this.center.x -= 2;
+				if(this.center.x - 2 >= 0) {
+					this.center.x -= 2;
+				}
 			}
 
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
