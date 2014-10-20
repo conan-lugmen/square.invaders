@@ -51,7 +51,7 @@
 		},
 
 		removeBullet: function(bullet) {
-			si.bullets.splice(si.bullets.indexOf(bullet));
+			si.bodies.splice(si.bodies.indexOf(bullet), 1);
 		},
 
 		createInvaders: function () {
