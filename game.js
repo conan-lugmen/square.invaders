@@ -17,15 +17,20 @@
 			si.canvas = document.getElementById(canvasId);
 			si.pg = si.canvas.getContext("2d");
 
-			si.players = [new Player()];
-			si.bullets = [];
-			si.invaders = [];
+			si.bodies = [new Player()];
 			this.createInvaders();
 		},
 
 		update: function () {
-			// helper array to process all draw functions at once
-			si.bodies = si.players.concat(si.bullets, si.invaders);
+			var bodies = si.bodies;
+			var notColliding = function (body1) {
+				return bodies.filter(function(body2) {
+					return colliding(body1, body2);
+					}).length === 0;
+			};
+
+			si.bodies = si.bodies.filter(notColliding);
+
 			si.bodies.forEach(function(body) {
 				body.update();
 			});
@@ -42,7 +47,7 @@
 		},
 
 		addBullet: function (bullet) {
-			si.bullets.push(bullet);
+			si.bodies.push(bullet);
 		},
 
 		removeBullet: function(bullet) {
@@ -57,7 +62,7 @@
 				var x = start + (i % 8) * spacing;
 				var y = start + (i % 3) * spacing;
 
-				si.invaders.push(new Invader({x: x, y: y}));
+				si.bodies.push(new Invader({x: x, y: y}));
 			}
 		}
 	};
@@ -203,6 +208,16 @@
 			fire: 32
 		};
 	};
+
+
+	var colliding = function(body1, body2) {
+		return ! (body1 === body2 ||
+			body1.center.x + body1.size.x / 2 < body2.center.x - body2.size.x / 2 ||
+			body1.center.y + body1.size.y / 2 < body2.center.y - body2.size.y / 2 ||
+			body1.center.x - body1.size.x / 2 > body2.center.x + body2.size.x / 2 ||
+			body1.center.y - body1.size.y / 2 > body2.center.y + body2.size.y / 2);
+	};
+
 
 	window.onload = function () {
 		si = {}; // global object for common settings and stuff
