@@ -101,13 +101,8 @@
 		},
 
 		draw: function () {
-			si.pg.fillStyle = this.color;
-			si.pg.fillRect(
-				this.center.x - this.size.x / 2,
-				this.center.y - this.size.y / 2,
-				this.size.x,
-				this.size.y
-			);
+			// TODO all objects have draw function because the plan is to draw them different at some point
+			drawRect(this);
 		}
 	};
 
@@ -134,13 +129,7 @@
 		},
 
 		draw: function () {
-			si.pg.fillStyle = this.color;
-			si.pg.fillRect(
-				this.center.x - this.size.x / 2,
-				this.center.y - this.size.y / 2,
-				this.size.x,
-				this.size.y
-			);
+			drawRect(this);
 		},
 
 		isOutOfBounds: function () {
@@ -179,13 +168,7 @@
 		},
 
 		draw: function () {
-			si.pg.fillStyle = this.color;
-			si.pg.fillRect(
-				this.center.x - this.size.x / 2,
-				this.center.y - this.size.y / 2,
-				this.size.x,
-				this.size.y
-			);
+			drawRect(this);
 		}
 	};
 
@@ -221,6 +204,16 @@
 			body1.center.y - body1.size.y / 2 > body2.center.y + body2.size.y / 2);
 	};
 
+
+	var drawRect = function (body) {
+		si.pg.fillStyle = body.color;
+		si.pg.fillRect(
+			body.center.x - body.size.x / 2,
+			body.center.y - body.size.y / 2,
+			body.size.x,
+			body.size.y
+		);
+	};
 
 
 	var drawBackground = function () {
