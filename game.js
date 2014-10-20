@@ -30,7 +30,13 @@ var si = {}; // global object for common settings and stuff
 		},
 
 		draw: function () {
-			si.pg.fillRect(0, 0, 30, 30);
+			si.pg.clearRect(0, 0, si.canvas.width, si.canvas.height);
+			si.pg.fillStyle = 'black';
+			si.pg.fillRect(0, 0, si.canvas.width, si.canvas.height);
+
+			this.bodies.forEach(function(value, index) {
+				value.draw();
+			});
 		}
 	};
 
@@ -51,6 +57,12 @@ var si = {}; // global object for common settings and stuff
 		},
 
 		draw: function () {
+			si.pg.fillStyle = this.color;
+			si.pg.fillRect(
+				this.center.x,
+				this.center.y,
+				this.size.x,
+				this.size.y);
 		}
 	};
 
