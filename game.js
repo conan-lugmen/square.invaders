@@ -27,6 +27,9 @@ var si = {}; // global object for common settings and stuff
 		},
 
 		update: function () {
+			this.bodies.forEach(function(body) {
+				body.update();
+			});
 		},
 
 		draw: function () {
@@ -34,8 +37,8 @@ var si = {}; // global object for common settings and stuff
 			si.pg.fillStyle = 'black';
 			si.pg.fillRect(0, 0, si.canvas.width, si.canvas.height);
 
-			this.bodies.forEach(function(value, index) {
-				value.draw();
+			this.bodies.forEach(function(body) {
+				body.draw();
 			});
 		}
 	};
@@ -50,10 +53,24 @@ var si = {}; // global object for common settings and stuff
 			x: si.canvas.width / 2,
 			y: si.canvas.height - this.size.y
 		};
+		this.keyboard = new Keyboard();
 	};
 
 	Player.prototype = {
 		update: function () {
+			if(this.keyboard.isDown(this.keyboard.keys.right)) {
+				this.center.x += 2;
+
+			} else if(this.keyboard.isDown(this.keyboard.keys.left)) {
+				this.center.x -= 2;
+			}
+
+			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
+				si.bullets.push(new Bullet({
+					x: this.center.x,
+					y: this.center.y - this.size.y
+				}));
+			}
 		},
 
 		draw: function () {
@@ -68,7 +85,7 @@ var si = {}; // global object for common settings and stuff
 
 
 	var Bullet = function (center, color) {
-		this.color = color || 'black'; // default to black
+		this.color = color || 'yellow'; // default to yellow
 		this.size = {
 			x: 3,
 			y: 3
@@ -102,6 +119,28 @@ var si = {}; // global object for common settings and stuff
 		}
 	};
 
+
+	var Keyboard = function () {
+		var state = {};
+
+		window.onkeydown = function (evt) {
+			state[evt.keyCode] = true;
+		};
+
+		window.onkeyup = function (evt) {
+			state[evt.keyCode] = false;
+		};
+
+		this.isDown = function (keyCode) {
+			return true === state[keyCode];
+		};
+
+		this.keys = {
+			left: 37,
+			right: 39,
+			fire: 32
+		};
+	};
 
 	window.onload = function () {
 		new Game("playground");
