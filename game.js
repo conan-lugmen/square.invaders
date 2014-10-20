@@ -96,8 +96,8 @@
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
 				si.game.addBullet(new Bullet({
 					x: this.center.x,
-					y: this.center.y - this.size.y / 2
-				}, 'yellow', {x: 0, y: -6}));
+					y: this.center.y - this.size.y / 2 - 2
+				}, 'yellow', {x: 0, y: -3}));
 			}
 		},
 
