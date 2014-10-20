@@ -38,8 +38,7 @@
 
 		draw: function () {
 			si.pg.clearRect(0, 0, si.canvas.width, si.canvas.height);
-			si.pg.fillStyle = 'black';
-			si.pg.fillRect(0, 0, si.canvas.width, si.canvas.height);
+			drawBackground();
 
 			si.bodies.forEach(function(body) {
 				body.draw();
@@ -223,6 +222,12 @@
 	};
 
 
+
+	var drawBackground = function () {
+		// TODO draw a parallax starfield
+		si.pg.fillStyle = 'black';
+		si.pg.fillRect(0, 0, si.canvas.width, si.canvas.height);
+	};
 	window.onload = function () {
 		si = {}; // global object for common settings and stuff
 
