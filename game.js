@@ -63,6 +63,14 @@
 
 				this.addBody(new Invader({x: x, y: y}));
 			}
+		},
+
+		areInvadersBelow: function (invader) {
+			return this.bodies.filter(function(b) {
+				return b instanceof Invader &&
+					b.center.y > invader.center.y &&
+					b.center.x - invader.center.x < invader.size.x;
+			}).length > 0;
 		}
 	};
 
@@ -165,6 +173,16 @@
 
 			this.center.x += this.speedX;
 			this.patrolX += this.speedX;
+
+			if('undefined' !== typeof si.game &&
+				Math.random() > 0.995 &&
+				! si.game.areInvadersBelow(this)) {
+
+				si.game.addBody(new Bullet({
+					x: this.center.x,
+					y: this.center.y + this.size.y / 2 + 2
+				}, 'yellow', {x: Math.random() * 0.5, y: 3}));
+			}
 		},
 
 		draw: function () {
