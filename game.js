@@ -17,21 +17,21 @@
 			si.canvas = document.getElementById(canvasId);
 			si.pg = si.canvas.getContext("2d");
 
-			si.bodies = [new Player()];
+			this.bodies = [new Player()];
 			this.createInvaders();
 		},
 
 		update: function () {
-			var bodies = si.bodies;
+			var bodies = this.bodies;
 			var notColliding = function (body1) {
 				return bodies.filter(function(body2) {
 					return colliding(body1, body2);
 					}).length === 0;
 			};
 
-			si.bodies = si.bodies.filter(notColliding);
+			this.bodies = this.bodies.filter(notColliding);
 
-			si.bodies.forEach(function(body) {
+			this.bodies.forEach(function(body) {
 				body.update();
 			});
 		},
@@ -40,17 +40,17 @@
 			si.pg.clearRect(0, 0, si.canvas.width, si.canvas.height);
 			drawBackground();
 
-			si.bodies.forEach(function(body) {
+			this.bodies.forEach(function(body) {
 				body.draw();
 			});
 		},
 
 		addBody: function (body) {
-			si.bodies.push(body);
+			this.bodies.push(body);
 		},
 
 		removeBullet: function(bullet) {
-			si.bodies.splice(si.bodies.indexOf(bullet), 1);
+			this.bodies.splice(this.bodies.indexOf(bullet), 1);
 		},
 
 		createInvaders: function () {
