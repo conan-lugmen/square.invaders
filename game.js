@@ -45,8 +45,8 @@
 			});
 		},
 
-		addBullet: function (bullet) {
-			si.bodies.push(bullet);
+		addBody: function (body) {
+			si.bodies.push(body);
 		},
 
 		removeBullet: function(bullet) {
@@ -61,7 +61,7 @@
 				var x = start + (i % 8) * spacing;
 				var y = start + (i % 3) * spacing;
 
-				si.bodies.push(new Invader({x: x, y: y}));
+				this.addBody(new Invader({x: x, y: y}));
 			}
 		}
 	};
@@ -93,7 +93,7 @@
 			}
 
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
-				si.game.addBullet(new Bullet({
+				si.game.addBody(new Bullet({
 					x: this.center.x,
 					y: this.center.y - this.size.y / 2 - 2
 				}, 'yellow', {x: 0, y: -3}));
