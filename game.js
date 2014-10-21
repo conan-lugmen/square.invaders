@@ -108,7 +108,7 @@
 
 
 	var Bullet = function (center, color, velocity) {
-		this.color = color || 'yellow'; // default to yellow
+		this.color = color;
 		this.size = {
 			x: 3,
 			y: 3
