@@ -3,13 +3,16 @@
 		this.init(canvasId);
 
 		var self = this;
-		var tick = function () {
-			self.update();
-			self.draw();
-			requestAnimationFrame(tick);
-		};
+		loadSound("laser.wav", function (shootSound) {
+			self.shootSound = shootSound;
+			var tick = function () {
+				self.update();
+				self.draw();
+				requestAnimationFrame(tick);
+			};
 
-		tick();
+			tick();
+		});
 	};
 
 	Game.prototype = {
@@ -105,6 +108,10 @@
 					x: this.center.x,
 					y: this.center.y - this.size.y / 2 - 2
 				}, 'purple', {x: 0, y: -3}));
+
+				// it seems this is not needed, but Mary used it in her presentation
+//				si.game.shootSound.load(); // rewind it
+				si.game.shootSound.play();
 			}
 		},
 
@@ -239,6 +246,20 @@
 		si.pg.fillStyle = 'black';
 		si.pg.fillRect(0, 0, si.canvas.width, si.canvas.height);
 	};
+
+
+	var loadSound = function(url, callback) {
+		var loaded = function () {
+			callback(sound);
+			sound.removeEventListener('canplaythrough', loaded);
+		};
+
+		var sound = new Audio(url);
+		sound.addEventListener('canplaythrough', loaded);
+		sound.load();
+	};
+
+
 	window.onload = function () {
 		si = {}; // global object for common settings and stuff
 
