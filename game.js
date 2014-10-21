@@ -96,7 +96,7 @@
 				si.game.addBody(new Bullet({
 					x: this.center.x,
 					y: this.center.y - this.size.y / 2 - 2
-				}, 'yellow', {x: 0, y: -3}));
+				}, 'purple', {x: 0, y: -3}));
 			}
 		},
 
