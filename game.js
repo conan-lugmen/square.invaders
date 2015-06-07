@@ -20,8 +20,20 @@
 			si.canvas = document.getElementById(canvasId);
 			si.pg = si.canvas.getContext("2d");
 
+			window.addEventListener('resize', function() {
+				this.resizeCanvas();
+				}.bind(this), false);
+
+			this.resizeCanvas();
+
 			this.bodies = [new Player()];
 			this.createInvaders();
+		},
+
+		resizeCanvas: function () {
+			si.pg.canvas.width = window.innerWidth;
+			si.pg.canvas.height = window.innerHeight;
+			this.draw();
 		},
 
 		update: function () {
@@ -43,9 +55,12 @@
 			si.pg.clearRect(0, 0, si.canvas.width, si.canvas.height);
 			drawBackground();
 
-			this.bodies.forEach(function(body) {
-				body.draw();
-			});
+			if(this.bodies) {
+				// draw only when they are already created
+				this.bodies.forEach(function(body) {
+					body.draw();
+				});
+			}
 		},
 
 		addBody: function (body) {
