@@ -10,7 +10,7 @@
 			var tick = function () {
 				self.update();
 				self.draw();
-				requestAnimationFrame(tick);
+				window.requestAnimationFrame(tick);
 			};
 
 			tick();
