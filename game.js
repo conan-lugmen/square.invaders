@@ -77,9 +77,10 @@
 			var start = 30;
 			var spacing = 30;
 
-			for(var i = 0; i < 24; i++) {
-				var x = start + (i % 8) * spacing;
-				var y = start + (i % 3) * spacing;
+			// Original Space Invaders game had 5 rows with 11 aliens each
+			for(var i = 0; i < 55; i++) {
+				var x = start + (i % 11) * spacing;
+				var y = start + (i % 5) * spacing;
 
 				this.addBody(new Invader({x: x, y: y}));
 			}
