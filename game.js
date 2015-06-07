@@ -35,6 +35,10 @@
 		resizeCanvas: function () {
 			si.pg.canvas.width = window.innerWidth;
 			si.pg.canvas.height = window.innerHeight;
+
+			// must update player and aliens positions first (leave bullets alone)
+			this.updateInvadersPositions();
+
 			this.draw();
 		},
 
@@ -58,7 +62,7 @@
 			drawBackground();
 
 			if(this.bodies) {
-				// draw only when they are already created
+				// draw only if they are already created (they're not on initialization)
 				this.bodies.forEach(function(body) {
 					body.draw();
 				});
@@ -82,7 +86,24 @@
 				var x = start + (i % 11) * spacing;
 				var y = start + (i % 5) * spacing;
 
-				this.addBody(new Invader({x: x, y: y}));
+				this.addBody(new Invader({
+					center: {x: x, y: y},
+					gridIndex: i
+				}));
+			}
+		},
+
+		updateInvadersPositions: function () {
+			var spacing = Math.floor(si.pg.canvas.width / 13);
+			var start = spacing * 1.25;
+
+			if(this.bodies) {
+				this.bodies.forEach(function(el) {
+					if(el instanceof Invader) {
+						el.center.x = start + (el.gridIndex % 11) * spacing;
+						el.center.y = start + (el.gridIndex % 5) * spacing;
+					}
+				});
 			}
 		},
 
@@ -179,13 +200,19 @@
 	};
 
 
-	var Invader = function (center, color) {
-		this.color = color || 'green';
+	var Invader = function (properties) {
+		// properties: {
+		//    center: required
+		//    color: optional
+		//    gridIndex: required
+
+		this.color = properties.color || 'green';
 		this.size = {
 			x: si.pg.canvas.width / 24,
 			y: si.pg.canvas.width / 24
 		};
-		this.center = center;
+		this.center = properties.center;
+		this.gridIndex = properties.gridIndex;
 		this.patrolX = 0;
 		this.speedX = 0.3;
 	};
