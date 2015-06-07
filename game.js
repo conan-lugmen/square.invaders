@@ -74,8 +74,8 @@
 		},
 
 		createInvaders: function () {
-			var start = 30;
-			var spacing = 30;
+			var spacing = Math.floor(si.pg.canvas.width / 13);
+			var start = spacing * 1.25;
 
 			// Original Space Invaders game had 5 rows with 11 aliens each
 			for(var i = 0; i < 55; i++) {
@@ -192,7 +192,7 @@
 
 	Invader.prototype = {
 		update: function () {
-			if(this.patrolX < 0 || this.patrolX > 40) {
+			if(this.patrolX < 0 || this.patrolX > this.size.x) {
 				this.speedX = - this.speedX;
 			}
 
