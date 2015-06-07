@@ -1,4 +1,6 @@
 ;(function() {
+	var si = {}; // global object for common settings and stuff
+
 	var Game = function (canvasId) {
 		this.init(canvasId);
 
@@ -276,8 +278,6 @@
 
 
 	window.onload = function () {
-		si = {}; // global object for common settings and stuff
-
 		si.game = new Game("playground");
 	};
 }());
