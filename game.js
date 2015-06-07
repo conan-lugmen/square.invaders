@@ -182,8 +182,8 @@
 	var Invader = function (center, color) {
 		this.color = color || 'green';
 		this.size = {
-			x: 10,
-			y: 10
+			x: si.pg.canvas.width / 24,
+			y: si.pg.canvas.width / 24
 		};
 		this.center = center;
 		this.patrolX = 0;
