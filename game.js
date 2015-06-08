@@ -1,4 +1,6 @@
 ;(function() {
+	"use strict";
+
 	var si = {}; // global object for common settings and stuff
 
 	var Game = function (canvasId) {
