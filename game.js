@@ -121,8 +121,8 @@
 	var Player = function () {
 		this.color = 'red';
 		this.size = {
-			x: 15,
-			y: 15
+			x: si.pg.canvas.width / 24,
+			y: si.pg.canvas.width / 24
 		};
 		this.center = {
 			x: si.canvas.width / 2,
@@ -156,6 +156,12 @@
 			}
 		},
 
+		resize: function () {
+			// called on windows resize
+			this.size.x = si.pg.canvas.width / 24;
+			this.size.y = si.pg.canvas.width / 24;
+		},
+
 		draw: function () {
 			// TODO all objects have draw function because the plan is to draw them different at some point
 			drawRect(this);
@@ -166,8 +172,8 @@
 	var Bullet = function (center, color, velocity) {
 		this.color = color;
 		this.size = {
-			x: 3,
-			y: 3
+			x: Math.ceil(si.pg.canvas.width / 240), // at least 1 pixel always
+			y: Math.ceil(si.pg.canvas.width / 240)
 		};
 		this.center = center;
 		this.velocity = velocity;
@@ -182,6 +188,12 @@
 			if(this.isOutOfBounds()) {
 				si.game.removeBullet(this);
 			}
+		},
+
+		resize: function () {
+			// called on windows resize
+			this.size.x = Math.ceil(si.pg.canvas.width / 240);
+			this.size.y = Math.ceil(si.pg.canvas.width / 240);
 		},
 
 		draw: function () {
@@ -237,6 +249,12 @@
 					y: this.center.y + this.size.y / 2 + 2
 				}, 'yellow', {x: Math.random() * 0.5, y: 3}));
 			}
+		},
+
+		resize: function () {
+			// called on windows resize
+			this.size.x = si.pg.canvas.width / 24;
+			this.size.y = si.pg.canvas.width / 24;
 		},
 
 		draw: function () {
