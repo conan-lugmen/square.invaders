@@ -158,7 +158,7 @@
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
 				si.game.addBody(new Bullet({
 					x: this.center.x,
-					y: this.center.y - this.size.y / 2 - 2
+					y: this.center.y - this.size.y / 2 - 3
 				}, 'purple', {x: 0, y: -3}));
 
 				// it seems this is not needed, but Mary used it in her presentation
@@ -257,7 +257,7 @@
 
 				si.game.addBody(new Bullet({
 					x: this.center.x,
-					y: this.center.y + this.size.y / 2 + 2
+					y: this.center.y + this.size.y / 2 + 3
 				}, 'yellow', {x: Math.random() * 0.5, y: 3}));
 			}
 		},
