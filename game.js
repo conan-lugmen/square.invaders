@@ -229,8 +229,8 @@
 			this.patrolX += this.speedX;
 
 			if('undefined' !== typeof si.game &&
-				Math.random() > 0.995 &&
-				! si.game.areInvadersBelow(this)) {
+				! si.game.areInvadersBelow(this) &&
+				Math.random() > 0.995) {
 
 				si.game.addBody(new Bullet({
 					x: this.center.x,
