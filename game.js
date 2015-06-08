@@ -25,21 +25,46 @@
 			si.pg = si.canvas.getContext("2d");
 
 			window.addEventListener('resize', function() {
-				this.resizeCanvas();
+				this.resize();
 				}.bind(this), false);
 
-			this.resizeCanvas();
+			this.resize();
 
 			this.bodies = [new Player()];
 			this.createInvaders();
 		},
 
-		resizeCanvas: function () {
+		resize: function () {
 			si.pg.canvas.width = window.innerWidth;
 			si.pg.canvas.height = window.innerHeight;
 
-			// must update player and aliens positions first (leave bullets alone)
-			this.updateInvadersPositions();
+			if(this.bodies) {
+				var spacing = Math.floor(si.pg.canvas.width / 13);
+				var start = spacing * 1.25;
+
+				this.bodies.forEach(function(el) {
+					// call resize method on each element
+					el.resize();
+
+					// reposition elements
+					if(el instanceof Invader) {
+						el.center.x = start + (el.gridIndex % 11) * spacing;
+						el.center.y = start + (el.gridIndex % 5) * spacing;
+
+					} else if(el instanceof Player) {
+						el.center.x = si.canvas.width / 2;
+						el.center.y = si.canvas.height - el.size.y;
+
+					} else { // is a Bullet
+						// Bullets' center is calculated relative to Invader or Player position
+						// But we've missed that information at this stage
+						// If I leave 'em alone, on resize from smaller to bigger screen size,
+						// alien bullets could (and often do) kill friendly (alien) units
+						// So, remove all bullets on resize
+						si.game.removeBullet(el);
+					}
+				});
+			}
 
 			this.draw();
 		},
@@ -92,20 +117,6 @@
 					center: {x: x, y: y},
 					gridIndex: i
 				}));
-			}
-		},
-
-		updateInvadersPositions: function () {
-			var spacing = Math.floor(si.pg.canvas.width / 13);
-			var start = spacing * 1.25;
-
-			if(this.bodies) {
-				this.bodies.forEach(function(el) {
-					if(el instanceof Invader) {
-						el.center.x = start + (el.gridIndex % 11) * spacing;
-						el.center.y = start + (el.gridIndex % 5) * spacing;
-					}
-				});
 			}
 		},
 
