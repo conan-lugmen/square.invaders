@@ -157,9 +157,16 @@
 
 			if(this.keyboard.isDown(this.keyboard.keys.fire)) {
 				si.game.addBody(new Bullet({
-					x: this.center.x,
-					y: this.center.y - this.size.y / 2 - 3
-				}, 'purple', {x: 0, y: -3}));
+					center: {
+						x: this.center.x,
+						y: this.center.y - this.size.y / 2 - 3
+					},
+					color: 'purple',
+					velocity: {
+						x: 0,
+						y: -3
+					}
+				}));
 
 				// it seems this is not needed, but Mary used it in her presentation
 //				si.game.shootSound.load(); // rewind it
@@ -180,14 +187,20 @@
 	};
 
 
-	var Bullet = function (center, color, velocity) {
-		this.color = color;
+	var Bullet = function (properties) {
+		// properties: {
+		//    center: {x: ?, y: ?},
+		//    color: [optional]
+		//    velocity: {x: ?, y: ?}
+		// }
+
+		this.color = properties.color;
 		this.size = {
 			x: Math.ceil(si.pg.canvas.width / 240), // at least 1 pixel always
 			y: Math.ceil(si.pg.canvas.width / 240)
 		};
-		this.center = center;
-		this.velocity = velocity;
+		this.center = properties.center;
+		this.velocity = properties.velocity;
 	};
 
 	Bullet.prototype = {
@@ -230,6 +243,7 @@
 		//    center: required
 		//    color: optional
 		//    gridIndex: required
+		// }
 
 		this.color = properties.color || 'green';
 		this.size = {
@@ -256,9 +270,16 @@
 				Math.random() > 0.995) {
 
 				si.game.addBody(new Bullet({
-					x: this.center.x,
-					y: this.center.y + this.size.y / 2 + 3
-				}, 'yellow', {x: Math.random() * 0.5, y: 3}));
+					center: {
+						x: this.center.x,
+						y: this.center.y + this.size.y / 2 + 3
+					},
+					color: 'yellow',
+					velocity: {
+						x: Math.random() * 0.5,
+						y: 3
+					}
+				}));
 			}
 		},
 
