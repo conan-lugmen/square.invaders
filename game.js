@@ -159,7 +159,7 @@
 				si.game.addBody(new Bullet({
 					center: {
 						x: this.center.x,
-						y: this.center.y - this.size.y / 2 - 3
+						y: this.center.y - this.size.y / 2 - Math.ceil(this.size.y * 0.1)
 					},
 					color: 'purple',
 					velocity: {
@@ -272,7 +272,7 @@
 				si.game.addBody(new Bullet({
 					center: {
 						x: this.center.x,
-						y: this.center.y + this.size.y / 2 + 3
+						y: this.center.y + this.size.y / 2 + Math.ceil(this.size.y * 0.1)
 					},
 					color: 'yellow',
 					velocity: {
