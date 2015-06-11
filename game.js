@@ -181,8 +181,7 @@
 		},
 
 		draw: function () {
-			// TODO all objects have draw function because the plan is to draw them different at some point
-			drawRect(this);
+			drawTriangle(this);
 		}
 	};
 
@@ -335,6 +334,33 @@
 			body.size.x,
 			body.size.y
 		);
+	};
+
+
+	var drawTriangle = function (body) {
+		var halfSideSize = body.size.x / 2; // let's calculate it only once
+
+		// See this for apothem and radius:
+		// http://www.vitutor.com/geometry/plane/equilateral_triangle.html
+
+		var apothem = Math.sqrt(3) / 6 * body.size.x;
+		var radius = body.size.x / Math.sqrt(3);
+
+		var ax = body.center.x - halfSideSize;
+		var ay = body.center.y + apothem;
+
+		var bx = body.center.x + halfSideSize;
+		var by = ay;
+
+		var cx = body.center.x;
+		var cy = body.center.y - radius;
+
+		si.pg.fillStyle = body.color;
+		si.pg.beginPath();
+		si.pg.moveTo(ax, ay);
+		si.pg.lineTo(bx, by);
+		si.pg.lineTo(cx, cy);
+		si.pg.fill();
 	};
 
 
